@@ -1,0 +1,73 @@
+#include <stdio.h> #include <stdlib.h>
+
+int top = 0; int stack[20];
+char infix[40], postfix[40];
+
+
+void convertToPostfix(); void push(int);
+char pop();
+
+
+int main() {
+printf("Enter the infix expression: "); scanf("%s", infix); convertToPostfix();
+return 0;
+
+}
+
+
+void convertToPostfix() { int i, j = 0;
+for (i = 0; infix[i] != '\0'; i++) { switch (infix[i]) {
+case '+':
+while (stack[top] >= 1) postfix[j++] = pop();
+push(1); break;
+case '-':
+while (stack[top] >= 1)
+ 
+postfix[j++] = pop(); push(2);
+break; case '*':
+while (stack[top] >= 3) postfix[j++] = pop();
+push(3); break;
+case '/':
+while (stack[top] >= 4) postfix[j++] = pop();
+push(4); break;
+case '^':
+postfix[j++] = pop(); push(5);
+break; case '(':
+push(0); break;
+case ')':
+while (stack[top] != 0) postfix[j++] = pop();
+top--; break;
+default:
+postfix[j++] = infix[i];
+}
+}
+
+while (top > 0)
+ 
+postfix[j++] = pop();
+printf("\nPostfix expression is =>\n\t\t%s", postfix);
+}
+
+
+void push(int element) { top++;
+stack[top] = element;
+
+}
+
+
+char pop() { int el; char e;
+el = stack[top]; top--;
+switch (el) { case 1:
+e = '+';
+break; case 2:
+e = '-';
+break; case 3:
+e = '*'; break;
+case 4:
+e = '/'; break;
+case 5:
+e = '^'; break;
+}
+ 
+return e;
+} 
