@@ -1,0 +1,133 @@
+#include <stdio.h> #include <stdlib.h> struct node
+{
+
+int coeff; int pow;
+struct node *Next;
+
+};
+
+struct node *Poly1,*Poly2,*Result; void Create(struct node *List);
+void Display(struct node *List);
+
+void Addition(struct node *Poly1,struct node *Poly2,struct node *Result); int main()
+{
+
+Poly1=(struct node*)malloc(sizeof(struct node)); Poly2=(struct node*)malloc(sizeof(struct node)); Result=(struct node*)malloc(sizeof(struct node));
+
+
+Poly1->Next = NULL; Poly2->Next = NULL;
+printf("Enter the values for first polynomial :\n"); Create(Poly1);
+printf("The polynomial equation is : "); Display(Poly1);
+printf("\nEnter the values for second polynomial :\n");
+ 
+
+
+Create(Poly2);
+
+printf("The polynomial equation is : "); Display(Poly2);
+Addition(Poly1, Poly2, Result);
+
+printf("\nThe polynomial equation addition result is : "); Display(Result);
+return 0;
+
+}
+
+void Create(struct node *List)
+
+{
+
+int choice;
+
+struct node *Position, *NewNode; Position = List;
+do
+
+{
+
+NewNode = malloc(sizeof(struct node)); printf("Enter the coefficient : "); scanf("%d", &NewNode->coeff); printf("Enter the power : ");
+scanf("%d", &NewNode->pow); NewNode->Next = NULL; Position->Next = NewNode; Position = NewNode; printf("Enter 1 to continue : "); scanf("%d", &choice);
+} while(choice == 1);
+
+}
+ 
+
+
+void Display(struct node *List)
+
+{
+
+struct node *Position; Position = List->Next; while(Position != NULL)
+{
+
+printf("%dx^%d", Position->coeff, Position->pow); Position = Position->Next;
+if(Position != NULL && Position->coeff > 0)
+
+{
+
+printf("+");
+
+}
+
+}
+
+}
+
+void Addition(struct node *Poly1, struct node *Poly2, struct node *Result)
+
+{
+
+struct node *Position; struct node *NewNode; Poly1 = Poly1->Next; Poly2 = Poly2->Next; Result->Next = NULL; Position = Result;
+while(Poly1 != NULL && Poly2 != NULL)
+
+{
+
+NewNode = malloc(sizeof(struct node)); if(Poly1->pow == Poly2->pow)
+ 
+
+
+{
+
+NewNode->coeff = Poly1->coeff + Poly2->coeff; NewNode->pow = Poly1->pow;
+Poly1 = Poly1->Next; Poly2 = Poly2->Next;
+}
+
+else if(Poly1->pow > Poly2->pow)
+
+{
+
+NewNode->coeff = Poly1->coeff; NewNode->pow = Poly1->pow; Poly1 = Poly1->Next;
+}
+
+else if(Poly1->pow < Poly2->pow)
+
+{
+
+NewNode->coeff = Poly2->coeff; NewNode->pow = Poly2->pow; Poly2 = Poly2->Next;
+}
+
+NewNode->Next = NULL; Position->Next = NewNode; Position = NewNode;
+}
+
+while(Poly1 != NULL || Poly2 != NULL)
+
+{
+
+NewNode = malloc(sizeof(struct node)); if(Poly1 != NULL)
+ 
+
+
+{
+
+NewNode->coeff = Poly1->coeff; NewNode->pow = Poly1->pow; Poly1 = Poly1->Next;
+}
+
+if(Poly2 != NULL)
+
+{
+
+NewNode->coeff = Poly2->coeff; NewNode->pow = Poly2->pow; Poly2 = Poly2->Next;
+}
+
+NewNode->Next = NULL; Position->Next = NewNode; Position = NewNode;
+}
+
+}
