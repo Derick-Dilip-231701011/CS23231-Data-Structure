@@ -1,0 +1,93 @@
+#include <stdio.h> #include <stdlib.h>
+
+struct queue
+{
+
+int data;
+struct queue *next;
+};
+
+
+struct queue *addq(struct queue *front); struct queue *delq(struct queue *front);
+
+int main()
+{
+
+struct queue *front = NULL; int option;
+
+do
+{
+
+printf("\n1. Add to Queue"); printf("\n2. Delete from Queue"); printf("\n3. Exit"); printf("\nSelect an option: "); scanf("%d", &option);
+
+switch(option)
+{
+
+case 1:
+front = addq(front);
+printf("\nElement added to the queue.");
+ 
+break; case 2:
+front = delq(front); break;
+case 3:
+exit(0);
+}
+
+} while(1);
+
+
+return 0;
+}
+
+
+struct queue *addq(struct queue *front)
+{
+
+struct queue *new_node = (struct queue*)malloc(sizeof(struct queue)); if(new_node == NULL)
+{
+
+printf("Insufficient memory."); return front;
+}
+
+
+printf("\nEnter data: "); scanf("%d", &new_node->data); new_node->next = NULL;
+
+if(front == NULL)
+{
+
+front = new_node;
+}
+
+else
+{
+ 
+struct queue *temp = front; while(temp->next != NULL)
+{
+
+temp = temp->next;
+}
+
+temp->next = new_node;
+}
+
+
+return front;
+}
+
+
+struct queue *delq(struct queue *front)
+{
+
+if(front == NULL)
+{
+
+printf("Queue is empty."); return front;
+}
+
+
+struct queue *temp = front; printf("Deleted data: %d", front->data); front = front->next;
+free(temp);
+
+
+return front;
+}
